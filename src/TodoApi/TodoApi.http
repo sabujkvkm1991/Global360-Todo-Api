@@ -1,0 +1,29 @@
+@TodoApi_HostAddress = http://localhost:5215
+
+### List all items
+GET {{TodoApi_HostAddress}}/api/todos
+Accept: application/json
+
+### Add an item
+# @name createTodo
+POST {{TodoApi_HostAddress}}/api/todos
+Content-Type: application/json
+
+{
+  "title": "Buy milk"
+}
+
+### Get the item just created
+GET {{TodoApi_HostAddress}}/api/todos/{{createTodo.response.body.$.id}}
+Accept: application/json
+
+### Delete the item just created
+DELETE {{TodoApi_HostAddress}}/api/todos/{{createTodo.response.body.$.id}}
+
+### Validation failure (empty title) -> 400
+POST {{TodoApi_HostAddress}}/api/todos
+Content-Type: application/json
+
+{
+  "title": ""
+}
